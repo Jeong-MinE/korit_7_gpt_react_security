@@ -46,28 +46,28 @@ function SignupPage(props) {
             message = "올바른 이메일을 입력하세요."
         }
 
-        errors({
+        setErrors({
             ...errors,
             [name]: message
         });
     }
 
     const handleSignupButtonOnClick = async () => {
-        if (Object.entries(errors).filter(entry => !!entry[1]) > 0) {
+        if (Object.entries(errors).filter(entry => !!entry[1]).length > 0) {
             return;
         }
 
         try {
             await api.post("/api/auth/signup", signupInput);
-                alert("회원가입 완료");
-                navigate("/signin");
+            alert("회원가입 완료");
+            navigate("/signin");
 
         } catch(error) {
             setErrors({
-            username: error.responce.data.data.username,
-            password: "",
-            name: "",
-            email: ""
+                username: error.response.data.data.username,
+                password: "",
+                name: "",
+                email: ""
         })
     }
 
